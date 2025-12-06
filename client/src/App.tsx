@@ -1,0 +1,112 @@
+import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import NotFound from "@/pages/NotFound";
+import { Route, Switch } from "wouter";
+import ErrorBoundary from "./components/ErrorBoundary";
+import { ThemeProvider } from "./contexts/ThemeContext";
+
+import AdminLayout from "./components/AdminLayout";
+import Home from "./pages/Home";
+import PropertyDetailPage from "./pages/PropertyDetail";
+import BlogPosts from "./pages/admin/BlogPosts";
+import BlogPostEdit from "./pages/admin/BlogPostEdit";
+import Properties from "./pages/Properties";
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
+import About from "./pages/About";
+import Dashboard from "./pages/admin/Dashboard";
+import PropertiesAdmin from "./pages/admin/Properties";
+import PropertyEdit from "./pages/admin/PropertyEdit";
+import PropertyNew from "./pages/admin/PropertyNew";
+import LeadsAdmin from "./pages/admin/Leads";
+import LeadEdit from "./pages/admin/LeadEdit";
+import ClientManagement from "./pages/admin/ClientManagement";
+import FollowUp from "./pages/admin/FollowUp";
+import Analytics from "./pages/admin/Analytics";
+import Contact from "./pages/Contact";
+import UsersAdmin from "./pages/admin/Users";
+import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
+import ForgotPassword from "./pages/auth/ForgotPassword";
+import SimuladorFinanciamento from "./pages/SimuladorFinanciamento"; // NOVO
+
+function Router() {
+  return (
+    <Switch>
+      {/* AUTH & PUBLIC ROUTES */}
+      <Route path="/" component={Home} />
+      <Route path="/login" component={Login} />
+      <Route path="/register" component={Register} />
+      <Route path="/forgot-password" component={ForgotPassword} />
+      
+      <Route path="/imoveis" component={Properties} />
+      <Route path="/imovel/:id" component={PropertyDetailPage} />
+      <Route path="/blog" component={Blog} />
+      <Route path="/blog/:slug" component={BlogPost} />
+      <Route path="/quem-somos" component={About} />
+      <Route path="/contato" component={Contact} />
+      <Route path="/simulador" component={SimuladorFinanciamento} /> {/* NOVO */}
+
+      {/* ADMIN ROUTES */}
+      <Route path="/admin">
+        {() => <AdminLayout><Dashboard /></AdminLayout>}
+      </Route>
+      <Route path="/admin/analytics">
+        {() => <AdminLayout><Analytics /></AdminLayout>}
+      </Route>
+      <Route path="/admin/properties">
+        {() => <AdminLayout><PropertiesAdmin /></AdminLayout>}
+      </Route>
+      <Route path="/admin/properties/new">
+        {() => <AdminLayout><PropertyNew /></AdminLayout>}
+      </Route>
+      <Route path="/admin/properties/:id">
+        {() => <AdminLayout><PropertyEdit /></AdminLayout>}
+      </Route>
+      <Route path="/admin/leads">
+        {() => <AdminLayout><LeadsAdmin /></AdminLayout>}
+      </Route>
+      <Route path="/admin/leads/new">
+        {() => <AdminLayout><LeadEdit /></AdminLayout>}
+      </Route>
+      <Route path="/admin/leads/edit/:id">
+        {() => <AdminLayout><LeadEdit /></AdminLayout>}
+      </Route>
+      <Route path="/admin/users">
+        {() => <AdminLayout><UsersAdmin /></AdminLayout>}
+      </Route>
+      <Route path="/admin/clients">
+        {() => <AdminLayout><ClientManagement /></AdminLayout>}
+      </Route>
+      <Route path="/admin/followup">
+        {() => <AdminLayout><FollowUp /></AdminLayout>}
+      </Route>
+      <Route path="/admin/blog">
+        {() => <AdminLayout><BlogPosts /></AdminLayout>}
+      </Route>
+      <Route path="/admin/blog/new">
+        {() => <AdminLayout><BlogPostEdit /></AdminLayout>}
+      </Route>
+      <Route path="/admin/blog/:id/edit">
+        {() => <AdminLayout><BlogPostEdit /></AdminLayout>}
+      </Route>
+
+      <Route component={NotFound} />
+    </Switch>
+  );
+}
+
+function App() {
+  return (
+    <ErrorBoundary>
+      <ThemeProvider defaultTheme="light">
+        <TooltipProvider>
+          <Toaster />
+          <Router />
+        </TooltipProvider>
+      </ThemeProvider>
+    </ErrorBoundary>
+  );
+}
+
+export default App;
