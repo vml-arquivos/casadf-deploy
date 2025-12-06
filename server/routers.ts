@@ -2,6 +2,7 @@ import { z } from "zod";
 import { router, publicProcedure, adminProcedure, protectedProcedure } from "./_core/trpc";
 import { db } from "./db";
 import { authRouter } from "./routers/auth";
+import { cmsRouter } from "./routers/cms";
 import { simulate } from "./services/financingCalculator";
 import { 
   properties, leads, blogPosts, blogCategories, reviews,
@@ -56,6 +57,7 @@ const simulationSchema = z.object({
 
 export const appRouter = router({
   auth: authRouter,
+  cms: cmsRouter,
 
   // Rotas CRUD que eram públicas AGORA usam adminProcedure - Fixes #2
   users: router({
