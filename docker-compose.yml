@@ -29,6 +29,8 @@ services:
       - NODE_ENV=production
       - JWT_SECRET=${JWT_SECRET}
       - ALLOWED_ORIGINS=${ALLOWED_ORIGINS}
+      - N8N_WEBHOOK_URL=${N8N_WEBHOOK_URL:-}
+      - WHATSAPP_API_TOKEN=${WHATSAPP_API_TOKEN:-}
     depends_on:
       db:
         condition: service_healthy

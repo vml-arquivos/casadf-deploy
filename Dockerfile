@@ -28,11 +28,19 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci --only=production --ignore-scripts
 
-# Copiar artefatos do build
+# Copiar artefatos do build e arquivos necessários
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/server ./server
 COPY --from=builder /app/drizzle ./drizzle
 COPY --from=builder /app/shared ./shared
+COPY --from=builder /app/tsconfig.json ./tsconfig.json
+COPY --from=builder /app/tsconfig.build.json ./tsconfig.build.json
+
+# Instalar tsx para executar TypeScript em produção (necessário para migrations)
+RUN npm install tsx --save-prod
+
+# Criar diretório para logs
+RUN mkdir -p /app/logs
 
 # Expor porta
 EXPOSE 5000
